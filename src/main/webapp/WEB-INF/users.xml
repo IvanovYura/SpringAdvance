@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userService" class="ru.epam.spring.hometask.service.impl.UserServiceImpl">
+        <constructor-arg ref="userRepository"/>
+    </bean>
+
+    <bean id="userRepository" class="ru.epam.spring.hometask.repository.UserRepository">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="iurii"/>
+                <ref bean="alex"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="iurii" class="ru.epam.spring.hometask.domain.User">
+        <property name="firstName" value="Iurii"/>
+        <property name="lastName" value="Ivanov"/>
+        <property name="email" value="iurii_ivanov@epam.com"/>
+        <property name="birthday" value="#{T(java.time.LocalDate).parse('1990-11-26')}"/>
+    </bean>
+
+    <bean id="alex" class="ru.epam.spring.hometask.domain.User">
+        <property name="firstName" value="Alex"/>
+        <property name="lastName" value="Smith"/>
+        <property name="email" value="alex_smith@epam.com"/>
+        <property name="birthday" value="#{T(java.time.LocalDate).parse('1980-11-01')}"/>
+    </bean>
+
+</beans>

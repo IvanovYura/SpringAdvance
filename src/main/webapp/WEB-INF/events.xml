@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="eventService" class="ru.epam.spring.hometask.service.impl.EventServiceImpl">
+        <constructor-arg ref="eventRepository"/>
+    </bean>
+
+    <bean id="eventRepository" class="ru.epam.spring.hometask.repository.EventRepository">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="tor"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="tor" class="ru.epam.spring.hometask.domain.Event">
+        <property name="name" value="Tor Ragnarek"/>
+        <property name="basePrice" value="250"/>
+        <property name="airDates">
+            <set>
+                <value>2017-12-01</value>
+                <value>2017-12-02</value>
+            </set>
+        </property>
+    </bean>
+
+</beans>

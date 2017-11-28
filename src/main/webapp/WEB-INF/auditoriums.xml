@@ -1,0 +1,36 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="auditoriumService" class="ru.epam.spring.hometask.service.impl.AuditoriumServiceImpl">
+        <constructor-arg ref="auditoriumRepository"/>
+    </bean>
+
+    <bean id="auditoriumRepository" class="ru.epam.spring.hometask.repository.AuditoriumRepository">
+        <constructor-arg>
+            <list>
+                <ref bean="hall-A"/>
+                <ref bean="hall-B"/>
+                <ref bean="hall-C"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="hall-A" class="ru.epam.spring.hometask.domain.Auditorium">
+        <property name="name" value="Hall A"/>
+        <property name="numberOfSeats" value="10"/>
+    </bean>
+
+    <bean id="hall-B" class="ru.epam.spring.hometask.domain.Auditorium">
+        <property name="name" value="Hall B"/>
+        <property name="numberOfSeats" value="15"/>
+    </bean>
+
+    <bean id="hall-C" class="ru.epam.spring.hometask.domain.Auditorium">
+        <property name="name" value="Hall C"/>
+        <property name="numberOfSeats" value="20"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,73 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="users.xml"/>
+    <import resource="events.xml"/>
+    <import resource="auditoriums.xml"/>
+
+    <context:component-scan base-package="ru.epam.spring.hometask.controller"/>
+
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/views/"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="ru.epam.spring.hometask.common.SpringException">exception</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="bookingService" class="ru.epam.spring.hometask.service.impl.BookingServiceImpl">
+        <constructor-arg ref="ticketRepository"/>
+    </bean>
+
+    <bean id="ticketRepository" class="ru.epam.spring.hometask.repository.TicketRepository">
+        <constructor-arg>
+            <list>
+                <ref bean="ticket1"/>
+                <ref bean="ticket2"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="ticket1" class="ru.epam.spring.hometask.domain.Ticket">
+        <constructor-arg index="0" ref="alex"/>
+        <constructor-arg index="1" ref="tor"/>
+        <constructor-arg index="2" value="#{T(java.time.LocalDate).parse('2017-11-27')}" />
+        <constructor-arg index="3" ref="hall-A"/>
+        <constructor-arg index="4" value="1"/>
+    </bean>
+
+    <bean id="ticket2" class="ru.epam.spring.hometask.domain.Ticket">
+        <constructor-arg index="0" ref="iurii"/>
+        <constructor-arg index="1" ref="tor"/>
+        <constructor-arg index="2" value="#{T(java.time.LocalDate).parse('2017-11-27')}" />
+        <constructor-arg index="3" ref="hall-A"/>
+        <constructor-arg index="4" value="10"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location">
+            <value>/WEB-INF/spring-pdf-views.xml</value>
+        </property>
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="100000" />
+    </bean>
+
+</beans>

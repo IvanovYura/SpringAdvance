@@ -1,0 +1,1 @@
+<p>Ticket price: ${ticket}</p>
